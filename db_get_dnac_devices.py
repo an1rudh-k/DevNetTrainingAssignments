@@ -7,6 +7,7 @@ class get_details:
     def __init__(self):
         self.token = None
         self.db_filename = "data/db_dnac_api.json"
+        self.db = None
 
         self.url = "https://sandboxdnac2.cisco.com/"
         self.username = "dnacdev"
@@ -22,7 +23,7 @@ class get_details:
         authentication = requests.auth.HTTPBasicAuth(self.username, self.password)
 
         response = requests.post(url, auth=authentication)
-
+        
         self.token = json.loads(response.text.encode('utf8'))['Token']
         
     def get_db(self):
@@ -32,10 +33,10 @@ class get_details:
 
         response = requests.get(url, headers=header)
 
-        response_dict = json.loads(response.text.encode('utf8'))
+        self.db = json.loads(response.text.encode('utf8'))
 
         with open(self.db_filename, "w") as json_obj:
-            json.dump(response_dict, json_obj, indent=4)
+            json.dump(self.db, json_obj, indent=4)
 
     
 if __name__ == "__main__":
