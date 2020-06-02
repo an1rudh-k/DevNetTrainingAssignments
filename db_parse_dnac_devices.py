@@ -1,5 +1,5 @@
 import json
-
+from db_get_dnac_devices import get_details 
 
 class parser:
 
@@ -31,9 +31,7 @@ class parser:
         self.parsed = parse_list
         
 
-def main():
-    parse = parser("data/dnac_devices.json")
-    print(parse.parsed)
-
 if __name__ == "__main__":
-    main()
+    detail = get_details()
+    parse = parser(detail.db_filename)
+    print(parse.parsed)
