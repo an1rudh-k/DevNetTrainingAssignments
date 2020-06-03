@@ -56,3 +56,4 @@ Notes: `<image_name>, <script>, <host_port>` and such variables in `commands` an
       - New script files, which can run as cgi-scripts
       - Updated docker-compose.yml
       - A text file, which contains the exact commands you executed in our local environment
+ 
