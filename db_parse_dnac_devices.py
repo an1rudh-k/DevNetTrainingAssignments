@@ -17,6 +17,7 @@ class parser:
         with open(file, 'r') as json_obj:
             json_dict = json.load(json_obj)
         
+        json_dict = detail.db
         devices = json_dict['response']
 
         parse_list = []
