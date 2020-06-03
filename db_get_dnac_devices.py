@@ -24,7 +24,7 @@ class get_details:
 
         response = requests.post(url, auth=authentication)
         
-        self.token = json.loads(response.text.encode('utf8'))['Token']
+        self.token = response.json()['Token']
         
     def get_db(self):
 
@@ -33,10 +33,10 @@ class get_details:
 
         response = requests.get(url, headers=header)
 
-        self.db = json.loads(response.text.encode('utf8'))
+        self.db = response.json()
 
-        with open(self.db_filename, "w") as json_obj:
-            json.dump(self.db, json_obj, indent=4)
+        # with open(self.db_filename, "w") as json_obj:
+        #     json.dump(self.db, json_obj, indent=4)
 
     
 if __name__ == "__main__":
