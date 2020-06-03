@@ -1,0 +1,42 @@
+PS C:\Users\aniruk\DevNetTrainingAssignments> docker build -t dnac_parse_api .
+Sending build context to Docker daemon  880.1kB
+Step 1/13 : FROM ubuntu:16.04
+ ---> 005d2078bdfa
+Step 2/13 : RUN apt-get update
+.
+.
+.
+Step 13/13 : ENTRYPOINT /usr/sbin/apache2ctl -D FOREGROUND
+Removing intermediate container b94bf912241e
+ ---> 987208e2ef5c
+Successfully built 987208e2ef5c
+Successfully tagged dnac_parse_api:latest
+SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
+
+PS C:\Users\aniruk\DevNetTrainingAssignments> docker run -p 8055:80 dnac_parse_api
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.5. Set the 'ServerName' directive globally to suppress this message
+
+
+PS C:\Users\aniruk\DevNetTrainingAssignments> docker container ls
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS
+ NAMES
+5506a03c05e2        dnac_parse_api      "/bin/sh -c '/usr/sb…"   4 minutes ago       Up 4 minutes        0.0.0.0:8055->80/tcp  
+ crazy_khorana
+
+
+PS C:\Users\aniruk\DevNetTrainingAssignments> docker stop 5506a03c05e2
+5506a03c05e2
+
+
+PS C:\Users\aniruk\DevNetTrainingAssignments> docker-compose up
+Creating network "devnettrainingassignments_default" with the default driver
+Creating devnettrainingassignments_copy_python_cgi_1 ... done
+Creating python_cgi_container                        ... done
+Attaching to python_cgi_container, devnettrainingassignments_copy_python_cgi_1
+python_cgi_container | 
+
+
+PS C:\Users\aniruk\DevNetTrainingAssignments> docker-compose down
+Removing devnettrainingassignments_copy_python_cgi_1 ... done
+Removing python_cgi_container                        ... done
+Removing network devnettrainingassignments_default
