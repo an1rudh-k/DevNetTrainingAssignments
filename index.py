@@ -9,43 +9,38 @@ print("------------------------------------<br>")
 
 ##-------PASTE YOUR SCRIPT BELOW---------#######
 
-import requests 
 import json
-import base64
+from db_get_dnac_devices import get_details 
 
-class get_details:
+class parser:
 
-    def __init__(self):
-        self.token = None
-        self.db_filename = "db_dnac_api.json"
-        self.db = None
+    def __init__ (self, database):
+        self.db = database
+        self.parsed = None
 
-        self.url = "https://sandboxdnac2.cisco.com/"
-        self.username = "dnacdev"
-        self.password = "D3v93T@wK!"
-
-        self.get_token()
-
-        self.get_db()
+        self.dnac_parser()
     
-    def get_token(self):
+    def dnac_parser(self):
 
-        url = self.url + "api/system/v1/auth/token"
-        authentication = requests.auth.HTTPBasicAuth(self.username, self.password)
+        reqd = ['family', 'type', 'id', 'managementIpAddress', 'softwareType']
 
-        response = requests.post(url, auth=authentication)
+        json_dict = self.db
+        devices = json_dict['response']
+
+        parse_list = []
+
+        for num in range(len(devices)):
+            parse_dict = {}
+            for key in devices[num]:
+                if key in reqd:
+                    parse_dict.update({key: devices[num][key]})
+            parse_list.append(parse_dict)
         
-        self.token = response.json()['Token']
+        self.parsed = parse_list
         
-    def get_db(self):
 
-        url = self.url + "dna/intent/api/v1/network-device"
-        header = {'x-auth-token': self.token}
-
-        response = requests.get(url, headers=header)
-
-        self.db = response.json()
-    
 if __name__ == "__main__":
-    get_dnac = get_details()
-    print("<h1>Token: {}</h1>".format(get_dnac.token))
+    detail = get_details()
+    parse = parser(detail.db)
+    print("<p1>Token: {}</p2>".format(detail.token))
+    print("<p2>Required response: {}</p2>".format(parse.parsed))
